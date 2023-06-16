@@ -1,9 +1,9 @@
 import { Books } from "../models/bookModel.js";
 
-const getBooksData = async () => {
+const getBooksData = async (res) => {
   try {
     const result = await Books.find();
-    console.log(result);
+    res.send(result);
   } catch (error) {
     console.log(error);
   }

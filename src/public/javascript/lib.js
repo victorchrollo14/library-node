@@ -7,7 +7,6 @@ const form = document.querySelector(".form");
 const main = document.querySelector(".main");
 const bookList = document.querySelector(".book-list");
 const bookCard = document.querySelector(".book");
-let objId = 0;
 
 function showForm(e) {
   form.style.transform = "scale(1)";
@@ -43,44 +42,32 @@ const getData = (e) => {
   if (isRead === "on") {
     readStatus = true;
   }
-
+  let objId = crypto.randomUUID();
   let newBook = new Books(objId, title, author, pages, readStatus);
   addBookToLibrary(newBook);
 
   form.style.transform = "scale(0)";
   userForm.reset();
-  objId++;
 };
 
-const changeReadStatus = (e) => {
-  let parent = e.target.parentElement;
-  let bookId = parent.getAttribute("data-id");
-
-  for (let obj of myLibrary) {
-    if (obj.id === Number(bookId)) {
-      if (obj.isRead === true) {
-        obj.isRead = false;
-        break;
-      }
-      obj.isRead = true;
+const changeReadStatus = (e, id) => {
+  myLibrary = myLibrary.map((book) => {
+    if (book.id === id) {
+      return { ...book, isRead: !book.isRead };
     }
-  }
+    return book;
+  });
   display(myLibrary);
 };
 
-const deleteBook = (e) => {
-  let parent = e.target.parentElement;
-  let bookId = parent.getAttribute("data-id");
-
-  for (let obj of myLibrary) {
-    if (obj.id === Number(bookId)) {
-      myLibrary.splice(obj.id, 1);
-      myLibrary.forEach((ob, i) => {
-        console.log(i);
-        ob.id = i;
-      });
+const deleteBook = (e, id) => {
+  myLibrary = myLibrary.filter((book) => {
+    if (book.id !== id) {
+      return book;
     }
-  }
+    console.log(id, book.id);
+  });
+
   display(myLibrary);
 };
 
@@ -103,7 +90,6 @@ function addBookToLibrary(book) {
 
 function display(Library) {
   let bookSection, bkName, bkAuthor, bkPages, readBtn, removeBtn;
-  let id = 0;
 
   // removing all the old data
   while (bookList.firstChild) {
@@ -123,16 +109,16 @@ function display(Library) {
 
     // adding classnames
     bookSection.classList.add("book");
-    bookSection.setAttribute("data-id", id);
+    bookSection.setAttribute("data-id", book.id);
     bkName.classList.add("title");
     bkAuthor.classList.add("author");
     bkPages.classList.add("no-pages");
     readBtn.classList.add("read-unread", "read-btn");
     removeBtn.classList.add("rm-btn", "remove");
 
-    // adding content
+    // adding contentid
     bkName.textContent = `"${book.title}"`;
-    bkAuthor.textContent = book.author;
+    bkAuthor.textContent = `- ${book.author}`;
     bkPages.textContent = `${book.pages} Pages`;
     removeBtn.textContent = "Remove";
     if (book.isRead) {
@@ -153,7 +139,7 @@ function display(Library) {
     // and adding eventListeners to the buttons
     readButtons.push(readBtn);
     readButtons.forEach((readBtn) => {
-      readBtn.addEventListener("click", changeReadStatus);
+      readBtn.addEventListener("click", (e) => changeReadStatus(e, book.id));
     });
 
     if (removeButtons.includes(removeBtn)) {
@@ -161,12 +147,10 @@ function display(Library) {
       return;
     }
     removeButtons.push(removeBtn);
-    console.log(removeButtons);
 
     removeButtons.forEach((removeBtn) => {
-      removeBtn.addEventListener("click", deleteBook);
+      removeBtn.addEventListener("click", (e) => deleteBook(e, book.id));
     });
-    id++;
   }
 }
 
@@ -176,10 +160,21 @@ main.addEventListener("click", hideForm);
 
 document.addEventListener("submit", getData);
 
-const url = "/get-books";
+const url = "/get-data";
+let booksArray;
 
 async function fetchBooks() {
-  const result = fetch(url);
+  try {
+    const books = await fetch(url);
+    booksArray = await books.json();
+    for (let book of booksArray) {
+      let { _id, title, author, pages, isRead } = book;
+      let newBook = new Books(_id, title, author, pages, isRead);
+      addBookToLibrary(newBook);
+    }
+  } catch (error) {
+    console.log(error, "failed to fetch data");
+  }
 }
 
-fetchBooks()
+fetchBooks();
