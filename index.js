@@ -6,13 +6,14 @@ import logger from "morgan";
 import { libraryRouter } from "./src/routes/library.js";
 import { loginRouter } from "./src/routes/login.js";
 import { regRouter } from "./src/routes/register.js";
+import { dataRouter } from "./src/routes/data.js";
 
 const PORT = 3000;
 const app = express();
 
+app.use(logger("dev")); // global middleware
 app.use(cors());
 app.use(express.json());
-app.use(logger("dev"));
 
 // serving static files
 const __filename = fileURLToPath(import.meta.url);
@@ -28,6 +29,7 @@ app.set("view engine", "ejs");
 app.use("/", libraryRouter);
 app.use("/login", loginRouter);
 app.use("/register", regRouter);
+app.use("/get-data", dataRouter);
 
 const runserver = async () => {
   try {

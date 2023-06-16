@@ -175,3 +175,11 @@ newBookBtn.addEventListener("click", showForm);
 main.addEventListener("click", hideForm);
 
 document.addEventListener("submit", getData);
+
+const url = "/get-books";
+
+async function fetchBooks() {
+  const result = fetch(url);
+}
+
+fetchBooks()
