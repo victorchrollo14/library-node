@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="main">
+      <header class="header">
+        <h1>Library</h1>
+        <a href="/login"><button class="login">login</button></a>
+      </header>
+      <button class="new-book btn">+ Add Book</button>
+      <section class="books-form">
+        <form action="" class="form scale-up-center">
+          <input
+            type="text"
+            name="title"
+            id="title"
+            placeholder="title"
+            required
+          />
+          <input
+            type="text"
+            name="author"
+            id="author"
+            placeholder="author"
+            required
+          />
+          <input
+            type="number"
+            name="pages"
+            id="pages"
+            placeholder="Pages"
+            required
+          />
+          <div class="read-section">
+            <label class="check">Have you read it?</label>
+            <input type="checkbox" name="read-status" id="read-status" />
+          </div>
+          <input type="submit" value="Submit" />
+        </form>
+        <section class="book-list">
+          <!-- <section class="book">
+            <h1 class="title">"Rudest Book Ever"</h1>
+            <h1 class="author">Swetabh gangwar</h1>
+            <h2 class="no-pages">136 pages</h2>
+            <button class="read-unread read-btn">Read</button>
+            <button class="remove rm-btn">Remove</button>
+          </section> -->
+        </section>
+      </section>
+    </div>
+
+    <script src="/javascript/lib.js"></script>
+  </body>
+</html>
