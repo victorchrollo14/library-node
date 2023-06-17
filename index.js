@@ -15,6 +15,7 @@ const app = express();
 
 app.use(logger("dev")); // global middleware
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // serving static files

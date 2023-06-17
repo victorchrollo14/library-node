@@ -23,7 +23,7 @@ function hideForm(e) {
 
 const getData = (e) => {
   // prevent submit
-  e.preventDefault();
+  // e.preventDefault();
 
   let title,
     author,
@@ -46,7 +46,20 @@ const getData = (e) => {
 
   form.style.transform = "scale(0)";
   userForm.reset();
+
+  // postData(data);
 };
+
+// async function postData(formData) {
+//   console.log(formData);
+//   try {
+//     const response = await fetch("/", { method: "POST", body: formData });
+//     const data = await response.json();
+//     console.log(data);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
 const changeReadStatus = (e, id) => {
   myLibrary = myLibrary.map((book) => {
@@ -88,9 +101,6 @@ function display(Library) {
   while (bookList.firstChild) {
     bookList.removeChild(bookList.firstChild);
   }
-  removeButtons = [];
-  readButtons = [];
-  bookIds = [];
 
   // Adding new Data
   for (let book of Library) {
@@ -155,7 +165,7 @@ listItems.forEach((item) => {
 newBookBtn.addEventListener("click", showForm);
 main.addEventListener("click", hideForm);
 
-document.addEventListener("submit", getData);
+// document.addEventListener("submit", getData);
 
 const url = "/get-data";
 let booksArray;
