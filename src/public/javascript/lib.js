@@ -1,6 +1,4 @@
 let myLibrary = [];
-let readButtons = [];
-let removeButtons = [];
 
 const newBookBtn = document.querySelector(".new-book");
 const form = document.querySelector(".form");
@@ -61,12 +59,8 @@ const changeReadStatus = (e, id) => {
 };
 
 const deleteBook = (e, id) => {
-  myLibrary = myLibrary.filter((book) => {
-    if (book.id !== id) {
-      return book;
-    }
-    console.log(id, book.id);
-  });
+  myLibrary = myLibrary.filter((book) => book.id !== id);
+  console.log(myLibrary);
 
   display(myLibrary);
 };
@@ -90,13 +84,13 @@ function addBookToLibrary(book) {
 
 function display(Library) {
   let bookSection, bkName, bkAuthor, bkPages, readBtn, removeBtn;
-
   // removing all the old data
   while (bookList.firstChild) {
     bookList.removeChild(bookList.firstChild);
   }
   removeButtons = [];
   readButtons = [];
+  bookIds = [];
 
   // Adding new Data
   for (let book of Library) {
@@ -135,21 +129,12 @@ function display(Library) {
     bookSection.appendChild(removeBtn);
     bookList.appendChild(bookSection);
 
-    // pushing the buttons of newly created books into a list
-    // and adding eventListeners to the buttons
-    readButtons.push(readBtn);
-    readButtons.forEach((readBtn) => {
-      readBtn.addEventListener("click", (e) => changeReadStatus(e, book.id));
+    readBtn.addEventListener("click", (e) => {
+      changeReadStatus(e, book.id);
     });
 
-    if (removeButtons.includes(removeBtn)) {
-      console.log("is present");
-      return;
-    }
-    removeButtons.push(removeBtn);
-
-    removeButtons.forEach((removeBtn) => {
-      removeBtn.addEventListener("click", (e) => deleteBook(e, book.id));
+    removeBtn.addEventListener("click", (e) => {
+      deleteBook(e, book.id);
     });
   }
 }
