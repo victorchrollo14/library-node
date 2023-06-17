@@ -139,6 +139,18 @@ function display(Library) {
   }
 }
 
+// side navigation toggle logic
+const listItems = document.querySelectorAll(".sidenav__item");
+
+listItems.forEach((item) => {
+  item.addEventListener("click", () => {
+    listItems.forEach((item) => {
+      item.classList.remove("active-item");
+    });
+    item.classList.add("active-item");
+  });
+});
+
 // main execution
 newBookBtn.addEventListener("click", showForm);
 main.addEventListener("click", hideForm);
