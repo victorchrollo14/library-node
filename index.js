@@ -3,10 +3,12 @@ import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
 import logger from "morgan";
+import {} from "dotenv/config";
 import { libraryRouter } from "./src/routes/library.js";
 import { loginRouter } from "./src/routes/login.js";
 import { regRouter } from "./src/routes/register.js";
 import { dataRouter } from "./src/routes/data.js";
+import mongoose from "mongoose";
 
 const PORT = 3000;
 const app = express();
@@ -33,6 +35,9 @@ app.use("/get-data", dataRouter);
 
 const runserver = async () => {
   try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("connected to mongodb library database...");
+
     app.listen(PORT, () => {
       console.log(`Library is running, server listening to ${PORT}`);
     });
