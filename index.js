@@ -57,10 +57,11 @@ TASKS
       ✅  Setting up database models
       ✅  Create and Read Operations
       ✅  Environment variables with dotenv
+      ✅  Delete Operation
 
     TO-DO ⛳
       🌟 Authentication and Authorization
-      🌟 Delete and Update Operation
+      🌟 Update Operation
       🌟 Genre Models and UserModels
       🌟 Using Extenal API's
       🌟 Deployement

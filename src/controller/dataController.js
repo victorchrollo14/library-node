@@ -11,11 +11,12 @@ const getBooksData = async (res) => {
 
 const addBookToLibrary = async ({ title, author, pages, read_status }) => {
   try {
+    let isRead = read_status === "on" ? true : false;
     const newBook = new Books({
       title: title,
       author: author,
       pages: pages,
-      isRead: read_status,
+      isRead: isRead,
     });
     await newBook.save();
     console.log(`${title} by ${author} added to library`);
