@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addBookToLibrary } from "../controller/dataController.js";
+import { addBookToLibrary, removeBook } from "../controller/dataController.js";
 
 const libraryRouter = Router();
 
@@ -8,9 +8,13 @@ libraryRouter.get("/", (req, res) => {
 });
 
 libraryRouter.post("/", (req, res) => {
-  console.log(req.body);
   addBookToLibrary(req.body);
   res.redirect("/");
+});
+
+libraryRouter.delete("/", async (req, res) => {
+  await removeBook(req.body);
+  res.status(200).json({ message: "Book Deleted sucessfully" });
 });
 
 export { libraryRouter };

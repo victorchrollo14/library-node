@@ -24,4 +24,15 @@ const addBookToLibrary = async ({ title, author, pages, read_status }) => {
   }
 };
 
-export { getBooksData, addBookToLibrary };
+const removeBook = async ({ id }) => {
+  try {
+    const query = { _id: id };
+    const result = await Books.deleteOne(query);
+    console.log(`${result.deletedCount} document deleted from database`);
+    return result.deletedCount;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getBooksData, addBookToLibrary, removeBook };

@@ -30,8 +30,8 @@ app.set("view engine", "ejs");
 
 // Routers
 app.use("/", libraryRouter);
-app.use("/login", loginRouter);
-app.use("/register", regRouter);
+app.use("/User/login", loginRouter);
+app.use("/User/register", regRouter);
 app.use("/get-data", dataRouter);
 
 const runserver = async () => {
@@ -48,3 +48,21 @@ const runserver = async () => {
 };
 
 runserver();
+
+/* 
+TASKS
+    DONE 😃
+      ✅  Routing 
+      ✅  Template Engine and serving Static files
+      ✅  Setting up database models
+      ✅  Create and Read Operations
+      ✅  Environment variables with dotenv
+
+    TO-DO ⛳
+      🌟 Authentication and Authorization
+      🌟 Delete and Update Operation
+      🌟 Genre Models and UserModels
+      🌟 Using Extenal API's
+      🌟 Deployement
+      
+*/

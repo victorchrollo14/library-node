@@ -46,24 +46,22 @@ const getData = (e) => {
 
   form.style.transform = "scale(0)";
   userForm.reset();
-
-  // postData(data);
 };
 
-// async function postData(formData) {
-//   console.log(formData);
-//   try {
-//     const response = await fetch("/", { method: "POST", body: formData });
-//     const data = await response.json();
-//     console.log(data);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+function toggleRead(button) {
+  if (button.innerText === "Read") {
+    button.classList.remove("green-bg");
+    button.classList.add("red-bg");
+    return;
+  }
+  button.classList.remove("red-bg");
+  button.classList.add("green-bg");
+}
 
 const changeReadStatus = (e, id) => {
   myLibrary = myLibrary.map((book) => {
     if (book.id === id) {
+      toggleRead(e.target);
       return { ...book, isRead: !book.isRead };
     }
     return book;
@@ -71,11 +69,22 @@ const changeReadStatus = (e, id) => {
   display(myLibrary);
 };
 
-const deleteBook = (e, id) => {
-  myLibrary = myLibrary.filter((book) => book.id !== id);
-  console.log(myLibrary);
-
-  display(myLibrary);
+const deleteBook = async (e, id) => {
+  try {
+    myLibrary = myLibrary.filter((book) => book.id !== id);
+    let result = await fetch("/", {
+      method: "DELETE",
+      body: JSON.stringify({ id: id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    let data = await result.json();
+    alert(data.message);
+    display(myLibrary);
+  } catch (error) {
+    alert(`${error}, \n Try again after some time`);
+  }
 };
 
 class Books {
@@ -127,8 +136,10 @@ function display(Library) {
     removeBtn.textContent = "Remove";
     if (book.isRead) {
       readBtn.textContent = "Read";
+      readBtn.classList.add("green-bg");
     } else {
-      readBtn.textContent = "UnRead";
+      readBtn.textContent = "Not Read";
+      readBtn.classList.add("red-bg");
     }
 
     // appending Childnodes
