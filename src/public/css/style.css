@@ -51,7 +51,7 @@ body {
   align-items: center;
   width: 100%;
   color: var(--white);
-  margin: 0 0 30px 0;
+  /* margin: 0 0 30px 0; */
 }
 
 .header h1 {
@@ -86,6 +86,10 @@ body {
   border-radius: 5px;
   color: var(--Navy);
   transition: var(--tr-linear);
+}
+
+.new-book{
+  width: 180px;
 }
 
 .btn:hover {
@@ -165,6 +169,13 @@ input[type="submit"]:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.book-list-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
 }
 
 .book-list {
@@ -265,8 +276,8 @@ input[type="submit"]:hover {
 .form {
   z-index: 2;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50px;
+  left: 250px;
   right: 0;
   display: flex;
   flex-direction: column;
@@ -607,9 +618,12 @@ svg {
 }
 
 .sm6-bg {
+  position: sticky;
+  top: 0;
+  left: 0;
   height: fit-content;
-  width: 20vw;
-  margin: 37px 0 0 0;
+  width: 21vw;
+  height: 100vh;
   --sm6-bg-o: 1;
   background: var(--slate);
 }

@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="main">
-    <form class="login-form">
+    <form method="post" action="/register" class="login-form">
         <div class="lq2-text-component lq2-text-center lq2-margin-bottom-sm">
           <h1>Register</h1>
           <p>Sign up to checkout the books collections</p>
@@ -22,7 +22,18 @@
             </button>
           </div>
         <p class="lq2-text-center lq2-margin-y-sm">or</p>
-
+        <div class="lq2-margin-bottom-sm">
+          <label class="lq2-form-label lq2-margin-bottom-3xs" for="input-email"
+            >FullName</label
+          >
+          <input
+            class="lq2-form-control lq2-width-100%"
+            type="text"
+            name="fullname"
+            id="fullname"
+            placeholder="Goku D Uzumaki"
+          />
+        </div>
         <div class="lq2-margin-bottom-sm">
           <label class="lq2-form-label lq2-margin-bottom-3xs" for="input-email"
             >Email</label
@@ -30,9 +41,9 @@
           <input
             class="lq2-form-control lq2-width-100%"
             type="email"
-            name="input-email"
-            id="input-email"
-            placeholder="email@myemail.com"
+            name="email"
+            id="email"
+            placeholder="randomguy123@gmail.com"
           />
         </div>
 
@@ -44,8 +55,8 @@
           <input
             class="lq2-form-control lq2-width-100%"
             type="password"
-            name="input-password"
-            id="input-password"
+            name="password"
+            id="password"
           />
         </div>
         <div class="lq2-margin-bottom-sm">
@@ -56,20 +67,20 @@
             <input
               class="lq2-form-control lq2-width-100%"
               type="password"
-              name="input-password"
-              id="input-password"
+              name="password"
+              id="password"
             />
           </div>
 
         <div class="lq2-margin-bottom-sm">
           <button class="lq2-btn lq2-btn--primary lq2-btn--md lq2-width-100%">
-            Login
+            Register
           </button>
         </div>
 
         <div class="lq2-text-center">
           <p class="lq2-text-sm">
-            Already have an account? <a href="/login">Login</a>
+            Already have an account? <a href="/login">login</a>
           </p>
         </div>
       </form>

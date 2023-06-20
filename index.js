@@ -21,7 +21,6 @@ app.use(express.json());
 // serving static files
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
 app.use(express.static(join(__dirname, "src", "public")));
 
 // template engines
@@ -57,11 +56,10 @@ TASKS
       ✅  Setting up database models
       ✅  Create and Read Operations
       ✅  Environment variables with dotenv
-      ✅  Delete Operation
+      ✅  Delete and Update Operation
 
     TO-DO ⛳
       🌟 Authentication and Authorization
-      🌟 Update Operation
       🌟 Genre Models and UserModels
       🌟 Using Extenal API's
       🌟 Deployement

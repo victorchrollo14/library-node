@@ -1,7 +1,6 @@
 import mongoose, { model } from "mongoose";
 
 mongoose.set("strictQuery", false);
-const URI = "mongodb://localhost:27017/library";
 
 // creating a new schema
 const Schema = mongoose.Schema;
