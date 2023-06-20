@@ -21,33 +21,6 @@ function hideForm(e) {
   }
 }
 
-const getData = (e) => {
-  // prevent submit
-  // e.preventDefault();
-
-  let title,
-    author,
-    pages,
-    readStatus = false,
-    isRead;
-  let userForm = document.querySelector("form");
-  let data = new FormData(userForm);
-
-  title = data.get("title");
-  author = data.get("author");
-  pages = data.get("pages");
-  isRead = data.get("read-status");
-  if (isRead === "on") {
-    readStatus = true;
-  }
-  let objId = crypto.randomUUID();
-  let newBook = new Books(objId, title, author, pages, readStatus);
-  addBookToLibrary(newBook);
-
-  form.style.transform = "scale(0)";
-  userForm.reset();
-};
-
 function toggleRead(button) {
   if (button.innerText === "Read") {
     button.classList.remove("green-bg");
@@ -58,15 +31,30 @@ function toggleRead(button) {
   button.classList.add("green-bg");
 }
 
-const changeReadStatus = (e, id) => {
-  myLibrary = myLibrary.map((book) => {
-    if (book.id === id) {
-      toggleRead(e.target);
-      return { ...book, isRead: !book.isRead };
-    }
-    return book;
-  });
-  display(myLibrary);
+const changeReadStatus = async (e, id) => {
+  try {
+    let read_stat;
+    myLibrary = myLibrary.map((book) => {
+      if (book.id === id) {
+        read_stat = !book.isRead;
+        toggleRead(e.target);
+        return { ...book, isRead: !book.isRead };
+      }
+      return book;
+    });
+
+    // handling update request
+    let response = await fetch(`/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ isRead: read_stat }),
+    });
+    display(myLibrary);
+  } catch (error) {
+    alert(error, " try again after some time");
+  }
 };
 
 const deleteBook = async (e, id) => {

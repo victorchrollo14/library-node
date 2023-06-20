@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addBookToLibrary, removeBook } from "../controller/dataController.js";
+import { dataControllers } from "../controller/dataController.js";
 
 const libraryRouter = Router();
 
@@ -8,13 +8,18 @@ libraryRouter.get("/", (req, res) => {
 });
 
 libraryRouter.post("/", (req, res) => {
-  addBookToLibrary(req.body);
+  dataControllers.addBookToLibrary(req.body);
   res.redirect("/");
 });
 
 libraryRouter.delete("/", async (req, res) => {
-  await removeBook(req.body);
+  await dataControllers.removeBook(req.body);
   res.status(200).json({ message: "Book Deleted sucessfully" });
+});
+
+libraryRouter.patch("/:id", async (req, res) => {
+  await dataControllers.updateBook(req.params.id, req.body);
+  res.status(200).json({ message: "Book Updated" });
 });
 
 export { libraryRouter };

@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { getBooksData } from "../controller/dataController.js";
+import { dataControllers } from "../controller/dataController.js";
 
 const dataRouter = Router();
 
 dataRouter.get("/", (req, res) => {
-  getBooksData(res);
+  dataControllers.getBooksData(res);
 });
 
 export { dataRouter };

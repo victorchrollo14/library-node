@@ -30,8 +30,8 @@ app.set("view engine", "ejs");
 
 // Routers
 app.use("/", libraryRouter);
-app.use("/User/login", loginRouter);
-app.use("/User/register", regRouter);
+app.use("/login", loginRouter);
+app.use("/register", regRouter);
 app.use("/get-data", dataRouter);
 
 const runserver = async () => {
