@@ -170,12 +170,18 @@ input[type="submit"]:hover {
 .book-list {
   z-index: 1;
   width: 80vw;
+  height: fit-content;
+  justify-content: center;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 20px;
+  flex-flow: row wrap;
   margin: 30px 0;
 }
+
+/* @media  screen and (min-width:1220px) {
+  .book-list{
+    justify-content: flex-start;
+  }
+} */
 
 .book {
   min-width: 300px;
@@ -232,7 +238,7 @@ input[type="submit"]:hover {
   background: var(--red);
 }
 
-.green-bg{
+.green-bg {
   background-color: var(--green);
 }
 

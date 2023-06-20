@@ -1,49 +1,57 @@
 import { Books } from "../models/bookModel.js";
 
 const dataControllers = (() => {
-  const getBooksData = async (res) => {
+  const getBooksData = async (req, res) => {
     try {
       const result = await Books.find();
-      res.send(result);
-    } catch (error) {
-      console.log(error);
+      res.status(200).json(result);
+    } catch (err) {
+      res.status(400).json({ error: err.message });
     }
   };
 
-  const addBookToLibrary = async ({ title, author, pages, read_status }) => {
+  const addBookToLibrary = async (req, res) => {
     try {
-      let isRead = read_status === "on" ? true : false;
+      let isRead = req.body.read_status === "on" ? true : false;
+
       const newBook = new Books({
-        title: title,
-        author: author,
-        pages: pages,
+        title: req.body.title,
+        author: req.body.author,
+        pages: req.body.pages,
         isRead: isRead,
       });
+
       await newBook.save();
-      console.log(`${title} by ${author} added to library`);
-    } catch (error) {
-      console.log(error);
+      res.status(201).redirect("/");
+    } catch (err) {
+      res.status(400).json({ error: err.message });
     }
   };
 
-  const removeBook = async ({ id }) => {
+  const removeBook = async (req, res) => {
     try {
-      const query = { _id: id };
-      const result = await Books.deleteOne(query);
-      console.log(`${result.deletedCount} document deleted from database`);
-      return result.deletedCount;
-    } catch (error) {
-      console.log(error);
+      const id = req.params.id;
+      await Books.findByIdAndDelete(id);
+
+      res.status(200).json({ message: "Book Deleted Successfully" });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
     }
   };
 
-  const updateBook = async (id, update) => {
+  const updateBook = async (req, res) => {
     try {
+      const id = req.params.id;
+      let newRead = req.body.isRead;
+
       const doc = await Books.findById(id);
-      doc.isRead = update.isRead;
+      doc.isRead = newRead;
       await doc.save();
-    } catch (error) {
-      console.log(error);
+      console.log("Book Updated");
+
+      res.status(200).json({ message: "Read Status changed" });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
     }
   };
 

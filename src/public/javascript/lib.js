@@ -51,7 +51,11 @@ const changeReadStatus = async (e, id) => {
       },
       body: JSON.stringify({ isRead: read_stat }),
     });
-    display(myLibrary);
+    let data = await response.json();
+    
+    if (data.message) {
+      display(myLibrary);
+    }
   } catch (error) {
     alert(error, " try again after some time");
   }
@@ -60,9 +64,8 @@ const changeReadStatus = async (e, id) => {
 const deleteBook = async (e, id) => {
   try {
     myLibrary = myLibrary.filter((book) => book.id !== id);
-    let result = await fetch("/", {
+    let result = await fetch(`/${id}`, {
       method: "DELETE",
-      body: JSON.stringify({ id: id }),
       headers: {
         "Content-Type": "application/json",
       },

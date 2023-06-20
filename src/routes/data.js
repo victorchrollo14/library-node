@@ -3,8 +3,6 @@ import { dataControllers } from "../controller/dataController.js";
 
 const dataRouter = Router();
 
-dataRouter.get("/", (req, res) => {
-  dataControllers.getBooksData(res);
-});
+dataRouter.get("/", dataControllers.getBooksData);
 
 export { dataRouter };
