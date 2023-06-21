@@ -2,6 +2,11 @@ import { User } from "../models/userModel.js";
 import validator from "validator";
 import bcrypt from "bcrypt";
 
+// authenticate the user
+const userLogin = async (req, res) => {
+  console.log(req.body);
+};
+
 // registering a new user
 const userSignUp = async (req, res) => {
   const name = req.body.fullname;
@@ -31,8 +36,8 @@ const userSignUp = async (req, res) => {
 
   if (!isStrongPass) {
     res.status(400).json({
-      message:
-        "Yo Weakling, set a Strong password which has a minimum of 8 characters, 1 symbol, number, uppercase and lowercase character",
+      message: `Yo Weakling, set a Strong password which has a minimum of 8 characters, 
+         1 symbol, number, uppercase and lowercase character`,
     });
   }
 
@@ -68,4 +73,4 @@ const checkPassword = (p1, p2) => {
   return false;
 };
 
-export { userSignUp };
+export { userSignUp, userLogin };

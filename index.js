@@ -9,9 +9,13 @@ import { loginRouter } from "./src/routes/login.js";
 import { regRouter } from "./src/routes/register.js";
 import { dataRouter } from "./src/routes/data.js";
 import mongoose from "mongoose";
+import session from "express-session";
 
 const PORT = 3000;
 const app = express();
+
+// session
+app.use()
 
 app.use(logger("dev")); // global middleware
 app.use(cors());
@@ -53,14 +57,14 @@ TASKS
     DONE 😃
       ✅  Routing 
       ✅  Template Engine and serving Static files
-      ✅  Setting up database models
-      ✅  Create and Read Operations
+      ✅  Setting up database, bookModels and User models
+      ✅  Create Read Update and Delete Operations
       ✅  Environment variables with dotenv
-      ✅  Delete and Update Operation
+      ✅  User Registration 
 
     TO-DO ⛳
       🌟 Authentication and Authorization
-      🌟 Genre Models and UserModels
+      🌟 Genre Models 
       🌟 Using Extenal API's
       🌟 Deployement
       
