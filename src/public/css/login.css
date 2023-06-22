@@ -36,7 +36,7 @@ h4 {
   font-weight: 700;
 }
 
-.main{
+.main {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -44,7 +44,21 @@ h4 {
   align-items: center;
 }
 
-form{
+.logout-form{
+  height: 80vh;
+}
+
+.error-message {
+  margin: 5px 0 0 0;
+  color: rgb(216, 69, 69);
+}
+
+.success {
+  margin: 5px 0 0 0;
+  color: rgb(102, 252, 102);
+}
+
+form {
   width: 500px;
   height: fit-content;
   padding: 10px;

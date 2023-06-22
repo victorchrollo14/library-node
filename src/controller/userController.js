@@ -19,6 +19,7 @@ const userLogin = async (req, res) => {
     const isPassword = bcrypt.compareSync(password, hashPass);
     if (!isPassword) {
       res.status(400).json({ error: "wrong password, retry again" });
+      return;
     }
 
     req.session.user = user;
@@ -45,21 +46,23 @@ const userLogout = async (req, res) => {
 
 // registering a new user
 const userSignUp = async (req, res) => {
-  const name = req.body.fullname;
+  const name = req.body.name;
   const email = req.body.email.toLowerCase();
   const [password, passwordConfirm] = [
-    req.body.password[0],
-    req.body.password[1],
+    req.body.password,
+    req.body.passwordConfirm,
   ];
 
   const isValidPass = checkPassword(password, passwordConfirm);
   if (!isValidPass) {
     res.status(400).json({ error: "Passwords does not match" });
+    return;
   }
 
   const isValidEmail = validator.isEmail(email);
   if (!isValidEmail) {
     res.status(400).json({ error: "Not a Valid Email" });
+    return;
   }
 
   const isStrongPass = validator.isStrongPassword(password, {
@@ -72,14 +75,16 @@ const userSignUp = async (req, res) => {
 
   if (!isStrongPass) {
     res.status(400).json({
-      message: `Yo Weakling, set a Strong password which has a minimum of 8 characters, 
+      error: `Yo Weakling, set a Strong password which has a minimum of 8 characters, 
          1 symbol, number, uppercase and lowercase character`,
     });
+    return;
   }
 
   const isUser = await User.exists({ email: email });
   if (isUser) {
     res.status(400).json({ error: `${email} is already registered` });
+    return;
   }
 
   try {
@@ -97,7 +102,7 @@ const userSignUp = async (req, res) => {
       message: `${name}, you are successfully registered. You can login now`,
     });
   } catch (err) {
-    res.json(400).json({ error: err.message });
+    res.status(400).json({ error: err.message });
   }
 };
 

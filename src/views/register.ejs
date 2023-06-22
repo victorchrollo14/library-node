@@ -8,9 +8,11 @@
 </head>
 <body>
     <div class="main">
-    <form method="post" action="/user/register" class="login-form">
+    <form  class="login-form logout-form">
         <div class="lq2-text-component lq2-text-center lq2-margin-bottom-sm">
-          <h1>Register</h1>
+        <h6 class="success"></h6>
+        <h6 class="error-message"></h6>
+          <h2>Register</h2>
           <p>Sign up to checkout the books collections</p>
         </div>
 
@@ -67,8 +69,8 @@
             <input
               class="lq2-form-control lq2-width-100%"
               type="password"
-              name="password"
-              id="password"
+              name="confirm-password"
+              id="confirm-password"
             />
           </div>
 
@@ -82,8 +84,44 @@
           <p class="lq2-text-sm">
             Already have an account? <a href="/user/login">login</a>
           </p>
+
         </div>
       </form>
     </div>
+    <script>
+      const form = document.querySelector("form")
+      const errorMessage = document.querySelector(".error-message")
+      const successMessage = document.querySelector(".success")
+
+      const handleSubmit = async (e) => {
+        e.preventDefault()
+        const body = new FormData(e.target);
+        const name = body.get("fullname")
+        const email = body.get("email")
+        const password = body.get("password")
+        const passwordConfirm = body.get("confirm-password")
+        console.log(body, name, email, password, passwordConfirm);
+        const response = await fetch("/user/register", {
+          method:"POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({name, email, password, passwordConfirm}),
+        })
+        const data = await response.json();
+        if(data.message){
+              successMessage.innerText = data.message;
+              setTimeout(() => {
+                window.location.href = "/";
+              }, 2000)
+        }
+        if(data.error){
+          errorMessage.innerText = data.error;
+        }
+     
+      }
+      form.addEventListener("submit", handleSubmit)
+
+    </script>
 </body>
 </html>

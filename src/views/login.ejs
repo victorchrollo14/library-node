@@ -10,8 +10,10 @@
 
 <body>
   <div class="main">
-    <form method="post" action="/user/login" class="login-form">
+    
+    <form  class="login-form">
       <div class="lq2-text-component lq2-text-center lq2-margin-bottom-sm">
+        <h6 class="success"></h6>
         <h1>Log in</h1>
         <p>login to checkout the books collections</p>
       </div>
@@ -57,8 +59,41 @@
           <p class="lq2-text-sm">
             Don't have an account? <a href="/user/register">Get started</a>
           </p>
+          <h6 class="error-message"></h6>
         </div>
     </form>
   </div>
+ <script>
+  const form = document.querySelector("form")
+  const errorMessage = document.querySelector(".error-message")
+  const successMessage = document.querySelector(".success")
+
+  const handleSubmit = async (e) => {
+     e.preventDefault()
+     const body = new FormData(e.target);
+     const email = body.get("email")
+     const password = body.get("password")
+     const response = await fetch("/user/login", {
+      method:"POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body:JSON.stringify({email, password}),
+     })
+     const data = await response.json();
+     console.log(data)
+     if(data.message){
+          successMessage.innerText = data.message;
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 2000)
+     }
+     if(data.error){
+      errorMessage.innerText = data.error;
+     }
+     
+  }
+  form.addEventListener("submit", handleSubmit)
+ </script>
 </body>
 </html>
