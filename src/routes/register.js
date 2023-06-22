@@ -3,10 +3,10 @@ import { userSignUp } from "../controller/userController.js";
 
 const regRouter = Router();
 
-regRouter.get("/", (req, res) => {
+regRouter.get("/register", (req, res) => {
   res.render("register");
 });
 
-regRouter.post("/", userSignUp);
+regRouter.post("/register", userSignUp);
 
 export { regRouter };

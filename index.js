@@ -10,12 +10,16 @@ import { regRouter } from "./src/routes/register.js";
 import { dataRouter } from "./src/routes/data.js";
 import mongoose from "mongoose";
 import session from "express-session";
+import passport from "passport";
+import { profileRouter } from "./src/routes/profile.js";
 
 const PORT = 3000;
 const app = express();
 
 // session
-app.use()
+app.use(session({ secret: "Cats", resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(logger("dev")); // global middleware
 app.use(cors());
@@ -33,9 +37,10 @@ app.set("view engine", "ejs");
 
 // Routers
 app.use("/", libraryRouter);
-app.use("/login", loginRouter);
-app.use("/register", regRouter);
+app.use("/user", loginRouter);
+app.use("/user", regRouter);
 app.use("/get-data", dataRouter);
+app.use("/profile", profileRouter);
 
 const runserver = async () => {
   try {
@@ -60,10 +65,10 @@ TASKS
       ✅  Setting up database, bookModels and User models
       ✅  Create Read Update and Delete Operations
       ✅  Environment variables with dotenv
-      ✅  User Registration 
+      ✅  Authentication and Authorization
 
     TO-DO ⛳
-      🌟 Authentication and Authorization
+      🌟 Add userIds for differnt users and anonymous users.
       🌟 Genre Models 
       🌟 Using Extenal API's
       🌟 Deployement

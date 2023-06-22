@@ -1,10 +1,25 @@
 let myLibrary = [];
+let booksArray;
 
+const url = "/get-data";
 const newBookBtn = document.querySelector(".new-book");
 const form = document.querySelector(".form");
 const main = document.querySelector(".main");
 const bookList = document.querySelector(".book-list");
 const bookCard = document.querySelector(".book");
+const logoutBtn = document.querySelector(".logout");
+
+async function logout(e) {
+  const response = await fetch("/user/logout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "applications/json",
+    },
+  });
+  const data = await response.json();
+  alert(`${data.name} logged out successfully`);
+ 
+}
 
 function showForm(e) {
   form.style.transform = "scale(1)";
@@ -52,7 +67,7 @@ const changeReadStatus = async (e, id) => {
       body: JSON.stringify({ isRead: read_stat }),
     });
     let data = await response.json();
-    
+
     if (data.message) {
       display(myLibrary);
     }
@@ -151,6 +166,20 @@ function display(Library) {
   }
 }
 
+async function fetchBooks() {
+  try {
+    const books = await fetch(url);
+    booksArray = await books.json();
+    for (let book of booksArray) {
+      let { _id, title, author, pages, isRead } = book;
+      let newBook = new Books(_id, title, author, pages, isRead);
+      addBookToLibrary(newBook);
+    }
+  } catch (error) {
+    console.log(error, "failed to fetch data");
+  }
+}
+
 // side navigation toggle logic
 const listItems = document.querySelectorAll(".sidenav__item");
 
@@ -166,24 +195,8 @@ listItems.forEach((item) => {
 // main execution
 newBookBtn.addEventListener("click", showForm);
 main.addEventListener("click", hideForm);
-
-// document.addEventListener("submit", getData);
-
-const url = "/get-data";
-let booksArray;
-
-async function fetchBooks() {
-  try {
-    const books = await fetch(url);
-    booksArray = await books.json();
-    for (let book of booksArray) {
-      let { _id, title, author, pages, isRead } = book;
-      let newBook = new Books(_id, title, author, pages, isRead);
-      addBookToLibrary(newBook);
-    }
-  } catch (error) {
-    console.log(error, "failed to fetch data");
-  }
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", logout);
 }
 
 fetchBooks();

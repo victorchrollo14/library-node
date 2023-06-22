@@ -5,6 +5,42 @@ import bcrypt from "bcrypt";
 // authenticate the user
 const userLogin = async (req, res) => {
   console.log(req.body);
+  const email = req.body.email.toLowerCase();
+  const password = req.body.password;
+
+  try {
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      res.status(400).json({ error: "User Does not exist" });
+      return;
+    }
+
+    const hashPass = user.password;
+    const isPassword = bcrypt.compareSync(password, hashPass);
+    if (!isPassword) {
+      res.status(400).json({ error: "wrong password, retry again" });
+    }
+
+    req.session.user = user;
+    res.status(200).json({ message: "successfully logged In" });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// loggin out users
+const userLogout = async (req, res) => {
+  const currentUser = req.session.user;
+  try {
+    if (currentUser) {
+      const { name } = currentUser;
+
+      req.session.destroy();
+      res.status(200).json({ name: name });
+    }
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 
 // registering a new user
@@ -73,4 +109,4 @@ const checkPassword = (p1, p2) => {
   return false;
 };
 
-export { userSignUp, userLogin };
+export { userSignUp, userLogin, userLogout };

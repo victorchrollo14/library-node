@@ -4,7 +4,7 @@ import { dataControllers } from "../controller/dataController.js";
 const libraryRouter = Router();
 
 libraryRouter.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", { user: req.session.user });
 });
 
 libraryRouter.post("/", dataControllers.addBookToLibrary);

@@ -10,7 +10,7 @@
 
 <body>
   <div class="main">
-    <form method="post" action="/login" class="login-form">
+    <form method="post" action="/user/login" class="login-form">
       <div class="lq2-text-component lq2-text-center lq2-margin-bottom-sm">
         <h1>Log in</h1>
         <p>login to checkout the books collections</p>
@@ -34,7 +34,7 @@
         <p class="lq2-text-center lq2-margin-y-sm">or</p>
         <div class="lq2-margin-bottom-sm">
           <label class="lq2-form-label lq2-margin-bottom-3xs" for="input-email">Email</label>
-          <input class="lq2-form-control lq2-width-100%" type="email" name="input-email" id="input-email"
+          <input class="lq2-form-control lq2-width-100%" type="email" name="email" id="email"
             placeholder="email@myemail.com" />
         </div>
 
@@ -44,7 +44,7 @@
             <span class="lq2-text-sm"><a href="#0">Forgot?</a></span>
           </div>
 
-          <input class="lq2-form-control lq2-width-100%" type="password" name="input-password" id="input-password" />
+          <input class="lq2-form-control lq2-width-100%" type="password" name="password" id="password" />
         </div>
 
         <div class="lq2-margin-bottom-sm">
@@ -55,7 +55,7 @@
 
         <div class="lq2-text-center">
           <p class="lq2-text-sm">
-            Don't have an account? <a href="/register">Get started</a>
+            Don't have an account? <a href="/user/register">Get started</a>
           </p>
         </div>
     </form>

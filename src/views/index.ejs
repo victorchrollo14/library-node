@@ -11,7 +11,12 @@
     <div class="main">
       <header class="header">
         <h1>Library</h1>
-        <a href="/login"><button class="login">login</button></a>
+        <% if (user) { %>
+        <h3>welcome <%= user.name %></h3>
+        <a href=""><button class="login logout">logout</button></a>
+        <% } else { %>
+        <a href="/user/login"><button class="login">login</button></a>
+        <% } %>
       </header>
       <section class="books-form">
         <!-- Side bar -->
@@ -133,7 +138,7 @@
               </li>
 
               <li class="sidenav__item">
-                <a href="#0" class="sidenav__link">
+                <a href="/profile" class="sidenav__link">
                   <svg
                     class="sm6-icon sidenav__icon"
                     aria-hidden="true"

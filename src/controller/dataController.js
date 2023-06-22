@@ -2,6 +2,7 @@ import { Books } from "../models/bookModel.js";
 
 const dataControllers = (() => {
   const getBooksData = async (req, res) => {
+    console.log(req.session.user);
     try {
       const result = await Books.find();
       res.status(200).json(result);
