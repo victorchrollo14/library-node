@@ -4,7 +4,9 @@ const dataControllers = (() => {
   const getBooksData = async (req, res) => {
     console.log(req.session.user);
     try {
-      const result = await Books.find();
+      const currentUser = req.session.user;
+      const userId = currentUser._id;
+      const result = await Books.find({ user: userId });
       res.status(200).json(result);
     } catch (err) {
       res.status(400).json({ error: err.message });
@@ -13,13 +15,14 @@ const dataControllers = (() => {
 
   const addBookToLibrary = async (req, res) => {
     try {
-      let isRead = req.body.read_status === "on" ? true : false;
+      const currentUser = req.session.user;
 
       const newBook = new Books({
         title: req.body.title,
         author: req.body.author,
         pages: req.body.pages,
-        isRead: isRead,
+        isRead: req.body.isRead,
+        user: currentUser._id,
       });
 
       await newBook.save();

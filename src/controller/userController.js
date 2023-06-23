@@ -11,7 +11,7 @@ const userLogin = async (req, res) => {
   try {
     const user = await User.findOne({ email: email });
     if (!user) {
-      res.status(400).json({ error: "User Does not exist" });
+      res.status(400).json({ error: "User Does not exist, Register first" });
       return;
     }
 
@@ -106,6 +106,19 @@ const userSignUp = async (req, res) => {
   }
 };
 
+// check if user is logged in
+const checkLogin = async (req, res) => {
+  try {
+    if (req.session.user) {
+      res.status(200).json({ login: true });
+      return;
+    }
+    res.status(200).json({ login: false });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 // check matching passwords
 const checkPassword = (p1, p2) => {
   if (p1 === p2) {
@@ -114,4 +127,4 @@ const checkPassword = (p1, p2) => {
   return false;
 };
 
-export { userSignUp, userLogin, userLogout };
+export { userSignUp, userLogin, userLogout, checkLogin };

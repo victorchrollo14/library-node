@@ -157,7 +157,7 @@
             </ul>
           </nav>
         </div>
-        <form action="/" method="post" class="form scale-up-center">
+        <form class="form scale-up-center">
           <input
             type="text"
             name="title"
@@ -181,7 +181,7 @@
           />
           <div class="read-section">
             <label class="check">Have you read it?</label>
-            <input type="checkbox" name="read_status" id="read_status" />
+            <input type="checkbox" name="read-status" id="read-status" />
           </div>
           <input type="submit" value="Submit" />
         </form>
@@ -200,6 +200,7 @@
       </section>
     </div>
 
-    <script src="/javascript/lib.js"></script>
+    <script src="/javascript/lib.js" type="module"></script>
+    <script type="module" src="/javascript/server.js"></script>
   </body>
 </html>

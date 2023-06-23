@@ -69,7 +69,7 @@ TASKS
 
     TO-DO ⛳
       🌟 Add userIds for differnt users and anonymous users.
-      🌟 Google and Github auth
+      🌟 Github authentication 
       🌟 Genre Models 
       🌟 Using Extenal API's
       🌟 Deployement

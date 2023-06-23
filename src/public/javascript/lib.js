@@ -1,7 +1,8 @@
+import { server } from "./server.js";
+
 let myLibrary = [];
 let booksArray;
 
-const url = "/get-data";
 const newBookBtn = document.querySelector(".new-book");
 const form = document.querySelector(".form");
 const main = document.querySelector(".main");
@@ -9,17 +10,44 @@ const bookList = document.querySelector(".book-list");
 const bookCard = document.querySelector(".book");
 const logoutBtn = document.querySelector(".logout");
 
-async function logout(e) {
-  const response = await fetch("/user/logout", {
-    method: "POST",
-    headers: {
-      "Content-Type": "applications/json",
-    },
-  });
-  const data = await response.json();
-  alert(`${data.name} logged out successfully`);
- 
+// book Class
+class Books {
+  constructor(id, title, author, pages, isRead) {
+    // the constructor...
+    this.id = id;
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.isRead = isRead;
+  }
 }
+
+// forms functions
+const submitBook = (e) => {
+  // prevent submit
+  e.preventDefault();
+
+  let userForm = document.querySelector("form");
+  let data = new FormData(userForm);
+  let readStatus = false;
+
+  const title = data.get("title");
+  const author = data.get("author");
+  const pages = data.get("pages");
+  const isRead = data.get("read-status");
+  console.log(isRead);
+
+  if (isRead === "on") readStatus = true;
+
+  if (isLoggedIn) server.addBook(title, author, pages, readStatus);
+
+  let objId = crypto.randomUUID();
+  let newBook = new Books(objId, title, author, pages, readStatus);
+  addBookToLibrary(newBook);
+
+  form.style.transform = "scale(0)";
+  userForm.reset();
+};
 
 function showForm(e) {
   form.style.transform = "scale(1)";
@@ -36,6 +64,7 @@ function hideForm(e) {
   }
 }
 
+// books crud functions
 function toggleRead(button) {
   if (button.innerText === "Read") {
     button.classList.remove("green-bg");
@@ -57,19 +86,9 @@ const changeReadStatus = async (e, id) => {
       }
       return book;
     });
-
-    // handling update request
-    let response = await fetch(`/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({ isRead: read_stat }),
-    });
-    let data = await response.json();
-
-    if (data.message) {
-      display(myLibrary);
+    display(myLibrary);
+    if (isLoggedIn) {
+      server.changeReadStatus(read_stat, id);
     }
   } catch (error) {
     alert(error, " try again after some time");
@@ -79,30 +98,16 @@ const changeReadStatus = async (e, id) => {
 const deleteBook = async (e, id) => {
   try {
     myLibrary = myLibrary.filter((book) => book.id !== id);
-    let result = await fetch(`/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    let data = await result.json();
-    alert(data.message);
+
+    if (isLoggedIn) {
+      server.deleteBook(id);
+    }
+
     display(myLibrary);
   } catch (error) {
     alert(`${error}, \n Try again after some time`);
   }
 };
-
-class Books {
-  constructor(id, title, author, pages, isRead) {
-    // the constructor...
-    this.id = id;
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.isRead = isRead;
-  }
-}
 
 function addBookToLibrary(book) {
   // do stuff here
@@ -166,37 +171,36 @@ function display(Library) {
   }
 }
 
-async function fetchBooks() {
-  try {
-    const books = await fetch(url);
-    booksArray = await books.json();
-    for (let book of booksArray) {
-      let { _id, title, author, pages, isRead } = book;
-      let newBook = new Books(_id, title, author, pages, isRead);
-      addBookToLibrary(newBook);
-    }
-  } catch (error) {
-    console.log(error, "failed to fetch data");
-  }
-}
-
 // side navigation toggle logic
-const listItems = document.querySelectorAll(".sidenav__item");
-
-listItems.forEach((item) => {
-  item.addEventListener("click", () => {
-    listItems.forEach((item) => {
-      item.classList.remove("active-item");
+const sideNavToggle = (() => {
+  const listItems = document.querySelectorAll(".sidenav__item");
+  listItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      listItems.forEach((item) => {
+        item.classList.remove("active-item");
+      });
+      item.classList.add("active-item");
     });
-    item.classList.add("active-item");
   });
-});
+})();
 
 // main execution
 newBookBtn.addEventListener("click", showForm);
 main.addEventListener("click", hideForm);
+form.addEventListener("submit", submitBook);
 if (logoutBtn) {
-  logoutBtn.addEventListener("click", logout);
+  logoutBtn.addEventListener("click", server.logout);
 }
 
-fetchBooks();
+const isLoggedIn = await server.checkLogin();
+console.log(isLoggedIn);
+if (isLoggedIn) {
+  booksArray = await server.fetchBooks();
+  for (let book of booksArray) {
+    let { _id, title, author, pages, isRead } = book;
+    let newBook = new Books(_id, title, author, pages, isRead);
+    addBookToLibrary(newBook);
+  }
+}
+
+export { display, myLibrary, Books };

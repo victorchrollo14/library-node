@@ -9,6 +9,10 @@ const bookSchema = new Schema({
   author: { type: String, required: true },
   pages: { type: Number, required: true },
   isRead: { type: Boolean, required: false },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 // creating a model
