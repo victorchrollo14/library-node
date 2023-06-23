@@ -20,7 +20,7 @@
 
       <div class="lq2-grid lq2-gap-xs">
         <div class="lq2-col-6@xs">
-          <button class="lq2-btn lq2-btn--subtle lq2-width-100%">
+          <button class="lq2-btn lq2-btn--subtle  google-login">
             <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
               <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -35,29 +35,29 @@
         </div>
         <p class="lq2-text-center lq2-margin-y-sm">or</p>
         <div class="lq2-margin-bottom-sm">
-          <label class="lq2-form-label lq2-margin-bottom-3xs" for="input-email">Email</label>
-          <input class="lq2-form-control lq2-width-100%" type="email" name="email" id="email"
+          <label class="lq2-form-label lq2-margin-bottom-3xs" for="input-email">Email</label><br>
+          <input required class="lq2-form-control lq2-width-100%" type="email" name="email" id="email"
             placeholder="email@myemail.com" />
         </div>
 
         <div class="lq2-margin-bottom-sm">
           <div class="lq2-flex lq2-justify-between lq2-margin-bottom-3xs">
             <label class="lq2-form-label" for="input-password">Password</label>
-            <span class="lq2-text-sm"><a href="#0">Forgot?</a></span>
+            <span class="lq2-text-sm"><a href="#0" class="extra-links">Forgot?</a></span>
           </div>
 
-          <input class="lq2-form-control lq2-width-100%" type="password" name="password" id="password" />
+          <input required class="lq2-form-control lq2-width-100%" type="password" name="password" id="password" />
         </div>
 
         <div class="lq2-margin-bottom-sm">
-          <button class="lq2-btn lq2-btn--primary lq2-btn--md lq2-width-100%">
+          <button class="login-btn">
             Login
           </button>
         </div>
 
         <div class="lq2-text-center">
           <p class="lq2-text-sm">
-            Don't have an account? <a href="/user/register">Get started</a>
+            Don't have an account? <a href="/user/register" class="extra-links">Get started</a>
           </p>
           <h6 class="error-message"></h6>
         </div>
