@@ -45,13 +45,13 @@ app.use("/profile", profileRouter);
 const runserver = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
-    console.log("connected to mongodb library database...");
+    // console.log("connected to mongodb library database...");
 
     app.listen(PORT, () => {
-      console.log(`Library is running, server listening to ${PORT}`);
+      // console.log(`Library is running, server listening to ${PORT}`);
     });
   } catch (err) {
-    console.log("Error Message: ", err);
+    // console.log("Error Message: ", err);
   }
 };
 
@@ -66,11 +66,10 @@ TASKS
       ✅  Create Read Update and Delete Operations
       ✅  Environment variables with dotenv
       ✅  Authentication and Authorization
+      ✅  Add userIds for differnt users .
 
     TO-DO ⛳
-      🌟 Add userIds for differnt users and anonymous users.
       🌟 Github authentication 
-      🌟 Genre Models 
       🌟 Using Extenal API's
       🌟 Deployement
       

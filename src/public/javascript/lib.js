@@ -35,7 +35,6 @@ const submitBook = (e) => {
   const author = data.get("author");
   const pages = data.get("pages");
   const isRead = data.get("read-status");
-  console.log(isRead);
 
   if (isRead === "on") readStatus = true;
 
@@ -193,7 +192,6 @@ if (logoutBtn) {
 }
 
 const isLoggedIn = await server.checkLogin();
-console.log(isLoggedIn);
 if (isLoggedIn) {
   booksArray = await server.fetchBooks();
   for (let book of booksArray) {

@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 
 // authenticate the user
 const userLogin = async (req, res) => {
-  console.log(req.body);
   const email = req.body.email.toLowerCase();
   const password = req.body.password;
 
@@ -90,7 +89,6 @@ const userSignUp = async (req, res) => {
   try {
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(password, salt);
-    console.log(hashPassword);
     const newUser = new User({
       name: name,
       email: email,

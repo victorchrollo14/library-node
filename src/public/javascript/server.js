@@ -8,7 +8,6 @@ const server = (() => {
       const booksArray = await books.json();
       return booksArray;
     } catch (error) {
-      console.log(error, "failed to fetch data");
     }
   }
 
@@ -52,7 +51,6 @@ const server = (() => {
         isRead: readStatus,
       }),
     });
-    console.log("book submit request sent");
   };
 
   async function logout(e) {

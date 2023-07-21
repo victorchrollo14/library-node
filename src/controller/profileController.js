@@ -1,5 +1,4 @@
 const showUserData = async (req, res) => {
-  console.log(req.session.id);
   try {
     const currentUser = req.session.user;
     if (currentUser) {

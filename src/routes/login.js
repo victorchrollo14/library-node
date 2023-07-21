@@ -8,9 +8,7 @@ loginRouter.get("/login", (req, res) => {
 });
 
 loginRouter.post("/login", userLogin);
-
 loginRouter.post("/logout", userLogout);
-
 loginRouter.post("/check-login", checkLogin);
 
 export { loginRouter };

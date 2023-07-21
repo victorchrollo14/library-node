@@ -100,7 +100,6 @@
         const email = body.get("email")
         const password = body.get("password")
         const passwordConfirm = body.get("confirm-password")
-        console.log(body, name, email, password, passwordConfirm);
         const response = await fetch("/user/register", {
           method:"POST",
           headers: {

@@ -2,7 +2,6 @@ import { Books } from "../models/bookModel.js";
 
 const dataControllers = (() => {
   const getBooksData = async (req, res) => {
-    console.log(req.session.user);
     try {
       const currentUser = req.session.user;
       const userId = currentUser._id;
@@ -51,7 +50,6 @@ const dataControllers = (() => {
       const doc = await Books.findById(id);
       doc.isRead = newRead;
       await doc.save();
-      console.log("Book Updated");
 
       res.status(200).json({ message: "Read Status changed" });
     } catch (err) {
