@@ -47,7 +47,7 @@ const runserver = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log("connected to mongodb library database...");
 
-    app.listen(process.env.PORT, () => {
+    app.listen(process.env.PORT || '3000', () => {
       console.log(`Library is running, server listening to ${PORT}`);
     });
   } catch (err) {
