@@ -45,13 +45,13 @@ app.use("/profile", profileRouter);
 const runserver = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
-    // console.log("connected to mongodb library database...");
+    console.log("connected to mongodb library database...");
 
-    app.listen(PORT, () => {
-      // console.log(`Library is running, server listening to ${PORT}`);
+    app.listen(process.env.PORT, () => {
+      console.log(`Library is running, server listening to ${PORT}`);
     });
   } catch (err) {
-    // console.log("Error Message: ", err);
+    console.log("Error Message: ", err);
   }
 };
 
