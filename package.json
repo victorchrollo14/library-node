@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node index.js",
     "devstart": "nodemon index.js",
-    "serverstart": "DEBUG=Express:* npm run devstart",
+    "serverstart": "DEBUG=Express:* npm run devstart"
   },
   "author": "",
   "license": "ISC",
