@@ -21,7 +21,7 @@ app.use(session({ secret: "Cats", resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(logger("dev")); // global middleware
+// app.use(logger("dev")); // global middleware
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -47,7 +47,7 @@ const runserver = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log("connected to mongodb library database...");
 
-    app.listen(process.env.PORT || '3000', () => {
+    app.listen(process.env.PORT || "3000", () => {
       console.log(`Library is running, server listening to ${PORT}`);
     });
   } catch (err) {
